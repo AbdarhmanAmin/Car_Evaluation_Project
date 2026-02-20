@@ -1,9 +1,3 @@
-واضح إن الـ Markdown دخل في كود البايثون وبقى "سلطة" شوية! ولا يهمك، أنا رتبتلك الدنيا تماماً بصيغة المفرد زي ما طلبت، وبالتنسيق الصحيح اللي يظهر شغلك بشكل احترافي على جيت هاب.
-
-انسخ الكود ده وحطه في ملف `README.md`:
-
----
-
 # Car Evaluation Project 🚗
 
 In this project, I built a predictive model to evaluate car quality based on specific technical and financial features. I explored the **Decision Tree Classifier** using different splitting criteria to achieve the highest possible accuracy.
@@ -104,4 +98,3 @@ The Decision Tree Classifier using the **Entropy** criterion achieved a robust a
 
 ---
 
-**تحب أعملك سيكشن "How to install" فيه الأوامر اللي الشخص محتاجها عشان يشغل الكود عندك (زي `pip install`)؟**
