@@ -94,7 +94,7 @@ Through this project, I have successfully demonstrated:
 
 The Decision Tree Classifier using the **Entropy** criterion achieved a robust accuracy of **94.75%**. This project highlights a complete end-to-end Machine Learning pipeline, from raw data processing to a saved, deployable model.
 
-**Developed by: [Your Name]**
+**Developed by: Abdarhman Amin **
 
 ---
 
