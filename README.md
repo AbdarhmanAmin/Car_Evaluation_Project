@@ -1,158 +1,84 @@
-# Car_Evaluation_Project 🚗
-Overview
+# Car Evaluation Project 🚗
 
-Car Evaluation Project predicts the evaluation of cars based on features such as buying price, maintenance cost, number of doors, seating capacity, luggage boot size, and safety.
-It uses a Decision Tree Classifier with both Gini Index and Entropy criteria, compares their performance, and deploys the best model in a Streamlit web application.
+This project focuses on predicting the quality/evaluation of cars based on several technical and price-related attributes. I implemented a **Decision Tree Classifier** using different splitting criteria (Gini Index and Entropy) to determine the most accurate model for classification.
 
-Dataset
+## 📋 Project Overview
+The goal of this project is to classify cars into different evaluation categories using a dataset that includes features like buying price, maintenance cost, number of doors, safety, and more.
 
-The dataset contains the following columns:
+## 🗂️ Dataset Features
+The dataset consists of the following features:
+* `buying`: Buying price.
+* `maint`: Price of the maintenance.
+* `doors`: Number of doors.
+* `persons`: Capacity in terms of persons to carry.
+* `lug_boot`: The size of luggage boot.
+* `safety`: Estimated safety of the car.
+* **Target (`class`)**: The evaluation of the car.
 
-Feature	Description
-buying	Car buying price (low, med, high, vhigh)
-maint	Maintenance cost (low, med, high, vhigh)
-doors	Number of doors (2, 3, 4, 5more)
-persons	Capacity of persons (2, 4, more)
-lug_boot	Luggage boot size (small, med, big)
-safety	Safety rating (low, med, high)
-class	Target label (car evaluation)
-Preprocessing
+## 🛠️ Tech Stack
+* **Language:** Python
+* **Libraries:** `pandas`, `scikit-learn`, `category_encoders`, `pickle`.
 
-Columns were renamed and encoded using category_encoders.OrdinalEncoder.
+---
 
-Example preprocessing snippet:
+## 🚀 Workflow
 
+### 1. Data Preprocessing
+Since the features are categorical, I used **Ordinal Encoding** to transform them into numerical values that the machine learning model can understand.
+```python
 import category_encoders as ce
-
 encoder = ce.OrdinalEncoder(cols=["buying","maint","doors","persons","lug_boot","safety"])
 X_train = encoder.fit_transform(X_train)
 X_test = encoder.transform(X_test)
+2. Modeling & Comparison
+I implemented two versions of the Decision Tree Classifier to find the optimal result:
 
-Features were split into X_train / X_test, labels into y_train / y_test.
+A. Decision Tree with Gini Index
+Accuracy Score: 94.22%
 
-Model Training
-1. Decision Tree Classifier (Gini Index)
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score
+Training Set Score: 100.00%
 
-gini = DecisionTreeClassifier(criterion='gini', max_depth=100, random_state=0)
-gini.fit(X_train, y_train)
-y_pred_gini = gini.predict(X_test)
+Observation: The model showed a slight sign of overfitting as it perfectly fit the training data.
 
-print("Testing Accuracy with Gini index:", accuracy_score(y_test, y_pred_gini))
+B. Decision Tree with Entropy (Selected Model)
+Accuracy Score: 94.75%
 
-Testing Accuracy: 0.9422
+Training Set Score: 100.00%
 
-Training Accuracy: 1.0000 (slight overfitting observed)
+Observation: This model performed slightly better on the test set and provided a more balanced result compared to the Gini Index model.
 
-2. Decision Tree Classifier (Entropy)
-entropy = DecisionTreeClassifier(criterion='entropy', max_depth=100, random_state=0)
-entropy.fit(X_train, y_train)
-y_pred_entropy = entropy.predict(X_test)
+3. Model Evaluation
+I generated a Confusion Matrix for the Entropy-based model to visualize the performance across different classes and ensure the model's reliability in predicting each category.
 
-print("Testing Accuracy with Entropy:", accuracy_score(y_test, y_pred_entropy))
+💾 Saving the Model
+Since the Entropy model yielded the highest accuracy, I selected it for final use. I saved both the model and the encoder using pickle for easy deployment and future predictions:
 
-Testing Accuracy: 0.9475 ✅ (better than Gini)
+model.pkl: The trained Decision Tree (Entropy).
 
-Confusion Matrix:
+encoder.pkl: The fitted Ordinal Encoder.
 
-from sklearn.metrics import confusion_matrix
-cm = confusion_matrix(y_test, y_pred_entropy)
-print(cm)
-Saving the Model
-
-The best performing model (Entropy) and the encoder are saved using pickle:
-
+Python
 import pickle
-
+# Saving the model and encoder
 with open('model.pkl', 'wb') as file:
     pickle.dump(entropy, file)
 
 with open('encoder.pkl', 'wb') as file:
     pickle.dump(encoder, file)
+🎓 Learning Outcomes
+Through this project, I have gained hands-on experience in:
 
-print("Model saved successfully!")
-Deployment
+Feature Engineering: Applying OrdinalEncoder to handle categorical data effectively.
 
-The project is deployed as an interactive web app using Streamlit:
+Hyperparameter Analysis: Comparing Gini Index vs. Entropy to select the best splitting criterion for a Decision Tree.
 
-Users select values for all features:
-Buying, Maintenance, Doors, Persons, Luggage Boot, Safety
+Model Evaluation: Utilizing accuracy_score and confusion_matrix to diagnose model performance.
 
-Click Predict to see the predicted car evaluation.
+Overfitting Diagnostics: Analyzing the gap between training and testing accuracy.
 
-Requires model.pkl and encoder.pkl in the project directory.
+Model Serialization: Exporting models and encoders using pickle for production readiness.
 
-Requirements
+🏁 Conclusion
+The Decision Tree Classifier with the Entropy criterion proved to be the most effective for this dataset, achieving an accuracy of ~94.75%. This project serves as a complete end-to-end Machine Learning pipeline developed independently.
 
-Python 3.x
-
-Libraries:
-
-pandas
-
-scikit-learn
-
-category_encoders
-
-streamlit
-
-Install packages:
-
-pip install pandas scikit-learn category_encoders streamlit
-How to Run
-
-Clone the repository:
-
-git clone https://github.com/yourusername/Car_Evaluation_Project.git
-cd Car_Evaluation_Project
-
-Run the Streamlit app:
-
-streamlit run app.py
-
-Interact with the app in your browser.
-
-Project Highlights
-
-Compared Gini Index vs Entropy for Decision Tree.
-
-Achieved 94.75% accuracy with Entropy.
-
-Saved model and encoder for Streamlit deployment.
-
-Easy-to-use web interface for predictions.
-
-Learning Outcomes 🎯
-
-By completing this project, you will learn to:
-
-Data Preprocessing
-
-Encode categorical features using OrdinalEncoder.
-
-Split datasets into training and testing sets.
-
-Model Training & Selection
-
-Train Decision Tree models using Gini Index and Entropy.
-
-Compare models and choose the best-performing one.
-
-Model Evaluation
-
-Calculate training and testing accuracy scores.
-
-Detect overfitting by comparing scores.
-
-Analyze predictions using a confusion matrix.
-
-Model Deployment
-
-Save trained models and encoders using pickle.
-
-Deploy a Streamlit web app for interactive predictions.
-
-End-to-End Machine Learning Pipeline
-
-Gain hands-on experience with a complete workflow from preprocessing → training → evaluation → deployment.
+Developed by [Your Name]
